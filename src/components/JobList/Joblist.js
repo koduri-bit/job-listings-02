@@ -13,7 +13,6 @@ import eyecamco from '../../assets/images/eyecam-co.svg'
 import theairfilter from '../../assets/images/the-air-filter-company.svg'
 
 import SelectedTags from '../JobList/SelectedTags'
-import {useMediaQuery} from "react-responsive";
 
 const INITIAL_JOB_LIST = [
     {
@@ -200,7 +199,7 @@ const Joblist = (props) =>{
    const [JOB_LIST_LATER, setJobListLater] = useState(INITIAL_JOB_LIST);
    const [jobTagsDisplayState , dispatchJobTags] =  useReducer(jobTagsToDisplayReducer, [])
 
-    const isMobile = useMediaQuery({ query: `(max-width: 376px)` });
+
 
     useEffect( ()  => {
         let initialJobList = [...JOB_LIST_INITIAL];
@@ -276,49 +275,7 @@ const Joblist = (props) =>{
 
     )
 
-
-
-
-
-
-    if(isMobile){
-        if(jobTagsDisplayState.length > 0){
-            const styles = classes['expand-margin-for-joblist'] + ' ' + classes['ul-joblist']
-            return (
-                <Fragment>
-
-                    <div className={classes['job-list']}>
-                        {jobTagsDisplayState.length > 0 ? <SelectedTags
-                            languageTagToShowInFilter={jobTagsDisplayState}
-                            tagUserClickedToRemoveAJobFromFilter={removeTagFromSavedList}
-                            clearAllTagsFromFilter={clearAllSelectedTagsOnClearButtonClick}/> : null
-                        }
-                        <ul className={styles}>
-                            {jobItemsInList}
-                        </ul>
-
-                    </div>
-                </Fragment>
-
-            )
-        }
-        return (
-            <Fragment>
-
-                <div className={classes['job-list']}>
-                    {jobTagsDisplayState.length > 0 ? <SelectedTags
-                        languageTagToShowInFilter={jobTagsDisplayState}
-                        tagUserClickedToRemoveAJobFromFilter={removeTagFromSavedList}/> : null
-                    }
-                    <ul className={classes['ul-joblist']}>
-                        {jobItemsInList}
-                    </ul>
-
-                </div>
-            </Fragment>
-
-        )
-    }
+    const styleForJobListInMobile =  jobTagsDisplayState.length > 0 ? classes['ul-joblist'] + ' ' + classes['joblistExtraMargin'] : classes['ul-joblist'] ;
 
     return (
         <Fragment>
@@ -329,7 +286,7 @@ const Joblist = (props) =>{
                     tagUserClickedToRemoveAJobFromFilter={removeTagFromSavedList}
                     clearAllTagsFromFilter={clearAllSelectedTagsOnClearButtonClick}/> : null
                 }
-                <ul className={classes['ul-joblist']}>
+                <ul className={styleForJobListInMobile}>
                     {jobItemsInList}
                 </ul>
 
